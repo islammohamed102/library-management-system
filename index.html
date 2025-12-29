@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIBRARY SYSTEM</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- وضع الظلام/الفاتح -->
+    <div class="theme-switch-wrapper">
+        <i class="fas fa-sun"></i>
+        <label class="theme-switch" for="checkbox">
+            <input type="checkbox" id="checkbox" />
+            <div class="slider round"></div>
+        </label>
+        <i class="fas fa-moon"></i>
+    </div>
+
+    <div class="container">
+        <!-- الهيدر -->
+        <header class="header">
+            <div class="logo">
+                <i class="fas fa-book-open"></i>
+                <h1>LIBRARY </h1>
+            </div>
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="ابحث عن كتب...">
+                <button id="searchBtn"><i class="fas fa-search"></i></button>
+            </div>
+        </header>
+
+        <!-- القائمة الجانبية -->
+        <aside class="sidebar">
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item active" data-section="dashboard">
+                        <i class="fas fa-home"></i>
+                        <span>الرئيسية</span>
+                    </li>
+                    <li class="nav-item" data-section="addBook">
+                        <i class="fas fa-plus-circle"></i>
+                        <span>إضافة كتاب</span>
+                    </li>
+                    <li class="nav-item" data-section="editBook">
+                        <i class="fas fa-edit"></i>
+                        <span>تعديل كتاب</span>
+                    </li>
+                    <li class="nav-item" data-section="borrowReturn">
+                        <i class="fas fa-exchange-alt"></i>
+                        <span>استعارة/إرجاع</span>
+                    </li>
+                    <li class="nav-item" data-section="deleteBook">
+                        <i class="fas fa-trash-alt"></i>
+                        <span>حذف كتاب</span>
+                    </li>
+                    <li class="nav-item" data-section="stats">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>الإحصائيات</span>
+                    </li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- المحتوى الرئيسي -->
+        <main class="main-content">
+            <!-- قسم الرئيسية -->
+            <section id="dashboard" class="content-section active">
+                <h2><i class="fas fa-tachometer-alt"></i> لوحة التحكم</h2>
+                <div class="stats-cards">
+                    <div class="stat-card total-books">
+                        <i class="fas fa-book"></i>
+                        <h3>إجمالي الكتب</h3>
+                        <p id="totalBooks">0</p>
+                    </div>
+                    <div class="stat-card available-books">
+                        <i class="fas fa-book-reader"></i>
+                        <h3>الكتب المتاحة</h3>
+                        <p id="availableBooks">0</p>
+                    </div>
+                    <div class="stat-card borrowed-books">
+                        <i class="fas fa-handshake"></i>
+                        <h3>الكتب المستعارة</h3>
+                        <p id="borrowedBooks">0</p>
+                    </div>
+                    <div class="stat-card recent-transactions">
+                        <i class="fas fa-history"></i>
+                        <h3>المعاملات الأخيرة</h3>
+                        <p id="recentTransactions">0</p>
+                    </div>
+                </div>
+                
+                <div class="section-content">
+                    <h3><i class="fas fa-list"></i> قائمة الكتب</h3>
+                    <div class="table-container">
+                        <table id="booksTable">
+                            <thead>
+                                <tr>
+                                    <th>رقم الكتاب</th>
+                                    <th>العنوان</th>
+                                    <th>المؤلف</th>
+                                    <th>الحالة</th>
+                                    <th>الإجراءات</th>
+                                </tr>
+                            </thead>
+                            <tbody id="booksTableBody">
+                                <!-- سيتم ملؤها بالبيانات -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+
+            <!-- قسم إضافة كتاب -->
+            <section id="addBook" class="content-section">
+                <h2><i class="fas fa-plus-circle"></i> إضافة كتاب جديد</h2>
+                <div class="form-container">
+                    <form id="addBookForm">
+                        <div class="form-group">
+                            <label for="bookTitle"><i class="fas fa-heading"></i> عنوان الكتاب</label>
+                            <input type="text" id="bookTitle" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookAuthor"><i class="fas fa-user-edit"></i> اسم المؤلف</label>
+                            <input type="text" id="bookAuthor" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="bookId"><i class="fas fa-id-card"></i> رقم الكتاب</label>
+                            <input type="number" id="bookId" required>
+                        </div>
+                        <button type="submit" class="btn-primary">
+                            <i class="fas fa-save"></i> إضافة الكتاب
+                        </button>
+                        <div id="addMessage" class="message"></div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- قسم تعديل كتاب -->
+            <section id="editBook" class="content-section">
+                <h2><i class="fas fa-edit"></i> تعديل بيانات كتاب</h2>
+                <div class="form-container">
+                    <form id="editBookForm">
+                        <div class="form-group">
+                            <label for="editBookId"><i class="fas fa-search"></i> رقم الكتاب للتعديل</label>
+                            <input type="number" id="editBookId" required>
+                            <button type="button" id="findBookBtn" class="btn-secondary">
+                                <i class="fas fa-search"></i> البحث
+                            </button>
+                        </div>
+                        <div class="book-details" id="bookDetails" style="display: none;">
+                            <div class="form-group">
+                                <label for="editBookTitle"><i class="fas fa-heading"></i> العنوان الجديد</label>
+                                <input type="text" id="editBookTitle" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="editBookAuthor"><i class="fas fa-user-edit"></i> المؤلف الجديد</label>
+                                <input type="text" id="editBookAuthor" required>
+                            </div>
+                            <button type="submit" class="btn-primary">
+                                <i class="fas fa-sync-alt"></i> تحديث الكتاب
+                            </button>
+                        </div>
+                        <div id="editMessage" class="message"></div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- قسم استعارة وإرجاع -->
+            <section id="borrowReturn" class="content-section">
+                <h2><i class="fas fa-exchange-alt"></i> استعارة وإرجاع الكتب</h2>
+                <div class="borrow-return-container">
+                    <div class="borrow-section">
+                        <h3><i class="fas fa-handshake"></i> استعارة كتاب</h3>
+                        <form id="borrowForm">
+                            <div class="form-group">
+                                <label for="borrowBookId">رقم الكتاب للاستعارة</label>
+                                <input type="number" id="borrowBookId" required>
+                            </div>
+                            <button type="submit" class="btn-borrow">
+                                <i class="fas fa-hand-holding"></i> استعارة
+                            </button>
+                            <div id="borrowMessage" class="message"></div>
+                        </form>
+                    </div>
+                    
+                    <div class="return-section">
+                        <h3><i class="fas fa-undo"></i> إرجاع كتاب</h3>
+                        <form id="returnForm">
+                            <div class="form-group">
+                                <label for="returnBookId">رقم الكتاب للإرجاع</label>
+                                <input type="number" id="returnBookId" required>
+                            </div>
+                            <button type="submit" class="btn-return">
+                                <i class="fas fa-undo"></i> إرجاع
+                            </button>
+                            <div id="returnMessage" class="message"></div>
+                        </form>
+                    </div>
+                </div>
+            </section>
+
+            <!-- قسم حذف كتاب -->
+            <section id="deleteBook" class="content-section">
+                <h2><i class="fas fa-trash-alt"></i> حذف كتاب</h2>
+                <div class="form-container">
+                    <form id="deleteBookForm">
+                        <div class="form-group">
+                            <label for="deleteBookId"><i class="fas fa-exclamation-triangle"></i> رقم الكتاب للحذف</label>
+                            <input type="number" id="deleteBookId" required>
+                        </div>
+                        <button type="submit" class="btn-danger">
+                            <i class="fas fa-trash"></i> حذف الكتاب
+                        </button>
+                        <div id="deleteMessage" class="message"></div>
+                    </form>
+                </div>
+            </section>
+
+            <!-- قسم الإحصائيات -->
+            <section id="stats" class="content-section">
+                <h2><i class="fas fa-chart-bar"></i> الإحصائيات والتقارير</h2>
+                <div class="stats-container">
+                    <div class="chart-container">
+                        <canvas id="booksChart"></canvas>
+                    </div>
+                    <div class="recent-transactions">
+                        <h3><i class="fas fa-history"></i> آخر المعاملات</h3>
+                        <div class="transactions-list" id="transactionsList">
+                            <!-- سيتم ملؤها بالبيانات -->
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- مكتبة Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
